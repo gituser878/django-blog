@@ -1,0 +1,53 @@
+{% extends 'blog/base.html' %}
+{% block title %}{{ title }} — MyBlog{% endblock %}
+{% block content %}
+
+<div class='bg-white dark:bg-[#111e33] border border-gray-100 dark:border-white/[0.07] rounded-xl p-8 max-w-2xl mx-auto'>
+  <h1 class='text-xl font-light tracking-tight text-gray-700 dark:text-gray-300 mb-6'>{{ title }}</h1>
+  <form method='POST' enctype='multipart/form-data' class='space-y-5'>
+    {% csrf_token %}
+    {% for field in form %}
+      <div>
+        <label class='block text-xs font-mono text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-1.5'>{{ field.label }}</label>
+        {{ field }}
+        {% if field.errors %}
+          <p class='text-red-400 text-xs font-mono mt-1'>{{ field.errors|join:', ' }}</p>
+        {% endif %}
+      </div>
+    {% endfor %}
+    <div class='pt-2'>
+      <button type='submit' class='text-sm font-mono px-5 py-2 rounded-md bg-[#4f8ef7]/10 border border-[#4f8ef7]/30 text-[#4f8ef7] hover:bg-[#4f8ef7]/20 transition-all'>
+        Save Post →
+      </button>
+    </div>
+  </form>
+</div>
+
+<style>
+  /* Style Django's auto-rendered form inputs to match the theme */
+  input[type=text], input[type=email], input[type=password], input[type=file], textarea, select {
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    border-radius: 6px;
+    border: 1px solid rgba(0,0,0,0.1);
+    background: #f9fafb;
+    color: #374151;
+    font-size: 0.9rem;
+    font-family: 'DM Sans', sans-serif;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  input[type=text]:focus, input[type=email]:focus, input[type=password]:focus, textarea:focus, select:focus {
+    border-color: #4f8ef7;
+  }
+  .dark input[type=text], .dark input[type=email], .dark input[type=password], .dark input[type=file], .dark textarea, .dark select {
+    background: #0a1628;
+    border-color: rgba(255,255,255,0.07);
+    color: #e8edf5;
+  }
+  .dark input[type=text]:focus, .dark input[type=email]:focus, .dark input[type=password]:focus, .dark textarea:focus, .dark select:focus {
+    border-color: #4f8ef7;
+  }
+</style>
+
+{% endblock %}
